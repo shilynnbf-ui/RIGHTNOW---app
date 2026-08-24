@@ -1,62 +1,185 @@
+# ============================================================
+# RIGHTSNOW
+# An educational app that helps users understand
+# their rights in different situations.
+# ============================================================
+
+
+# PARENT CLASS
 
 class Scenario:
-    def __init__(self, name, importance, reminder):
+    def __init__(
+        self,
+        name,
+        reminder,
+        should_do,
+        should_not_do,
+        possible_concerns
+    ):
         self.name = name
         self.reminder = reminder
-        self.set_importance(importance)
+        self.should_do = should_do
+        self.should_not_do = should_not_do
+        self.possible_concerns = possible_concerns
 
-    # Keeps importance between 1 and 5
-    def set_importance(self, importance):
-        if importance >= 1 and importance <= 5:
-            self.importance = importance
-        else:
-            print("Importance must be between 1 and 5.")
-            self.importance = 1
-
-    # Displays basic scenario information
+    # General scenario information
     def show_info(self):
-        print("Scenario:", self.name)
-        print("Importance:", self.importance)
-        print("Reminder:", self.reminder)
+        print()
+        print("========================================")
+        print("SCENARIO:", self.name)
+        print("========================================")
+
+        print()
+        print("REMINDER:")
+        print(self.reminder)
+
+        print()
+        print("WHAT YOU SHOULD DO:")
+        print("-", self.should_do)
+
+        print()
+        print("WHAT YOU SHOULD NOT DO:")
+        print("-", self.should_not_do)
+
+        print()
+        print("POSSIBLE RIGHTS CONCERNS:")
+        for concern in self.possible_concerns:
+            print("-", concern)
+
+        print()
+        print("IMPORTANT:")
+        print("A possible concern does not automatically")
+        print("mean that a law was violated.")
+        print("Laws vary by location and situation.")
+
+        print("========================================")
 
 
-# KIND 1 - POLICE SCENARIO
+# ============================================================
+# POLICE SCENARIO
+# ============================================================
 
 class PoliceScenario(Scenario):
 
-    def __init__(self, name, importance, reminder, interaction_type):
-        super().__init__(name, importance, reminder)
+    def __init__(
+        self,
+        name,
+        reminder,
+        should_do,
+        should_not_do,
+        possible_concerns,
+        interaction_type
+    ):
+        super().__init__(
+            name,
+            reminder,
+            should_do,
+            should_not_do,
+            possible_concerns
+        )
+
         self.interaction_type = interaction_type
 
-    # Displays information specifically for police scenarios
+    # Police-specific information
     def show_info(self):
-        print("\nPOLICE SCENARIO")
+        print()
+        print("========================================")
+        print("           POLICE SCENARIO")
+        print("========================================")
+
         print("Scenario:", self.name)
-        print("Importance:", self.importance)
-        print("Reminder:", self.reminder)
         print("Interaction Type:", self.interaction_type)
 
+        print()
+        print("REMINDER:")
+        print(self.reminder)
 
-# KIND 2 - SCHOOL SCENARIO
+        print()
+        print("WHAT YOU SHOULD DO:")
+        print("-", self.should_do)
+
+        print()
+        print("WHAT YOU SHOULD NOT DO:")
+        print("-", self.should_not_do)
+
+        print()
+        print("POSSIBLE RIGHTS CONCERNS:")
+
+        for concern in self.possible_concerns:
+            print("-", concern)
+
+        print()
+        print("IMPORTANT:")
+        print("A possible concern does not automatically")
+        print("mean that a law was violated.")
+        print("Laws vary by location and situation.")
+
+        print("========================================")
+
+
+# SCHOOL SCENARIO
 
 
 class SchoolScenario(Scenario):
 
-    def __init__(self, name, importance, reminder, school_issue):
-        super().__init__(name, importance, reminder)
+    def __init__(
+        self,
+        name,
+        reminder,
+        should_do,
+        should_not_do,
+        possible_concerns,
+        school_issue
+    ):
+        super().__init__(
+            name,
+            reminder,
+            should_do,
+            should_not_do,
+            possible_concerns
+        )
+
         self.school_issue = school_issue
 
-    # Displays information specifically for school scenarios
+    # School-specific information
     def show_info(self):
-        print("\nSCHOOL SCENARIO")
+        print()
+        print("========================================")
+        print("           SCHOOL SCENARIO")
+        print("========================================")
+
         print("Scenario:", self.name)
-        print("Importance:", self.importance)
-        print("Reminder:", self.reminder)
         print("School Issue:", self.school_issue)
 
+        print()
+        print("REMINDER:")
+        print(self.reminder)
+
+        print()
+        print("WHAT YOU SHOULD DO:")
+        print("-", self.should_do)
+
+        print()
+        print("WHAT YOU SHOULD NOT DO:")
+        print("-", self.should_not_do)
+
+        print()
+        print("POSSIBLE RIGHTS CONCERNS:")
+
+        for concern in self.possible_concerns:
+            print("-", concern)
+
+        print()
+        print("IMPORTANT:")
+        print("A possible concern does not automatically")
+        print("mean that a law was violated.")
+        print("School policies and laws vary by location.")
+
+        print("========================================")
 
 
-# BOSS CLASS
+
+# RIGHTSNOW APP CLASS
 
 
 class RightsNow:
@@ -64,84 +187,125 @@ class RightsNow:
     def __init__(self):
         self.scenarios = []
 
-  
+    # Add a scenario to the list
     def add_scenario(self, scenario):
         self.scenarios.append(scenario)
 
+    # Show all scenarios
+    def show_all_scenarios(self):
 
-
-    def show_scenarios(self):
+        print()
+        print("========================================")
+        print("          RIGHTSNOW SCENARIOS")
+        print("========================================")
 
         if len(self.scenarios) == 0:
             print("There are no scenarios.")
             return
 
-        print("\nRIGHTSNOW SCENARIOS")
+        for number, scenario in enumerate(self.scenarios, start=1):
+            print(number, "-", scenario.name)
 
-        for i in range(len(self.scenarios)):
-            print(i + 1, "-", self.scenarios[i].name)
+        print("========================================")
 
- 
-
+    # Let the user choose a scenario
     def view_scenario(self):
 
         if len(self.scenarios) == 0:
             print("There are no scenarios.")
             return
 
-        self.show_scenarios()
+        self.show_all_scenarios()
 
-        try:
-            choice = int(input("\nChoose a scenario number: "))
+        while True:
 
-            if choice < 1 or choice > len(self.scenarios):
-                print("That scenario does not exist.")
+            choice = input(
+                "\nChoose a scenario number "
+                "or B to go back: "
+            )
+
+            if choice.lower() == "b":
                 return
 
-            selected = self.scenarios[choice - 1]
+            if choice.isdigit():
 
-            selected.show_info()
+                number = int(choice)
 
-        except ValueError:
-            print("Please enter a number.")
+                if 1 <= number <= len(self.scenarios):
 
+                    selected = self.scenarios[number - 1]
 
+                    selected.show_info()
+
+                    input(
+                        "\nPress Enter to return to the menu..."
+                    )
+
+                    return
+
+            print("Invalid choice. Please try again.")
+
+    # Let the user create a new scenario
     def create_scenario(self):
 
-        print("\nADD A SCENARIO")
+        print()
+        print("========================================")
+        print("           ADD A SCENARIO")
+        print("========================================")
+
         print("1 - Police Scenario")
         print("2 - School Scenario")
+        print("3 - Cancel")
 
-        try:
-            scenario_type = int(input("Choose a type: "))
+        scenario_type = input("Choose a type: ")
 
-            if scenario_type != 1 and scenario_type != 2:
-                print("Please choose 1 or 2.")
-                return
-
-        except ValueError:
-            print("Please enter a number.")
+        if scenario_type == "3":
             return
 
-        # Get basic information
+        if scenario_type != "1" and scenario_type != "2":
+
+            print("Invalid choice.")
+            return
+
+        print()
+
         name = input("Scenario name: ")
 
-        reminder = input("Rights reminder: ")
+        reminder = input(
+            "General rights reminder: "
+        )
 
-        # Get importance
-        try:
-            importance = int(input("Importance from 1 to 5: "))
+        should_do = input(
+            "What should the person do? "
+        )
 
-            if importance < 1 or importance > 5:
-                print("Importance must be between 1 and 5.")
-                return
+        should_not_do = input(
+            "What should the person NOT do? "
+        )
 
-        except ValueError:
-            print("Please enter a number for importance.")
-            return
+        print()
+        print("Now add possible warning signs.")
 
-        # Create a Police Scenario
-        if scenario_type == 1:
+        possible_concerns = []
+
+        while True:
+
+            concern = input(
+                "Enter a possible rights concern "
+                "(or type DONE): "
+            )
+
+            if concern.lower() == "done":
+                break
+
+            if concern.strip() != "":
+                possible_concerns.append(concern)
+
+        # ----------------------------------------
+        # Police scenario
+        # ----------------------------------------
+
+        if scenario_type == "1":
 
             interaction_type = input(
                 "Interaction type "
@@ -150,12 +314,17 @@ class RightsNow:
 
             new_scenario = PoliceScenario(
                 name,
-                importance,
                 reminder,
+                should_do,
+                should_not_do,
+                possible_concerns,
                 interaction_type
             )
 
-        # Create a School Scenario
+        # ----------------------------------------
+        # School scenario
+        # ----------------------------------------
+
         else:
 
             school_issue = input(
@@ -165,124 +334,267 @@ class RightsNow:
 
             new_scenario = SchoolScenario(
                 name,
-                importance,
                 reminder,
+                should_do,
+                should_not_do,
+                possible_concerns,
                 school_issue
             )
 
-        # Add the new object to the list
         self.add_scenario(new_scenario)
 
-        print("Scenario added successfully.")
+        print()
+        print("Scenario added successfully!")
 
+        input(
+            "Press Enter to continue..."
+        )
 
-    def show_total_importance(self):
-
-        if len(self.scenarios) == 0:
-            print("There are no scenarios to add up.")
-            return
-
-        total = 0
-
-        for scenario in self.scenarios:
-            total = total + scenario.importance
-
-        print("\nTotal importance points:", total)
-
-
-
+    # Run the entire program
     def run(self):
 
-        print("\nWelcome to RIGHTSNOW")
-        print(
-            "Educational use only. "
-            "Laws and rights can vary by location."
-        )
+        print()
+        print("========================================")
+        print("           WELCOME TO RIGHTSNOW")
+        print("========================================")
+
+        print()
+        print("RIGHTSNOW helps users understand")
+        print("what they can do in different situations.")
+
+        print()
+        print("Educational use only.")
+        print("Rights and laws can vary by location.")
+        print("========================================")
 
         while True:
 
-            print("\nRIGHTSNOW MENU")
+            print()
+            print("              RIGHTSNOW MENU")
+            print("----------------------------------------")
             print("1 - Show all scenarios")
-            print("2 - View one scenario")
+            print("2 - View a scenario")
             print("3 - Add a scenario")
-            print("4 - Show total importance")
-            print("5 - Quit")
+            print("4 - Quit")
+            print("----------------------------------------")
 
-            choice = input("Choose an option: ")
+            choice = input(
+                "Choose an option: "
+            )
 
             # Option 1
             if choice == "1":
-                self.show_scenarios()
+
+                self.show_all_scenarios()
+
+                input(
+                    "\nPress Enter to return to the menu..."
+                )
 
             # Option 2
             elif choice == "2":
+
                 self.view_scenario()
 
             # Option 3
             elif choice == "3":
+
                 self.create_scenario()
 
             # Option 4
             elif choice == "4":
-                self.show_total_importance()
 
-            # Option 5
-            elif choice == "5":
-                print("Thanks for using RIGHTSNOW.")
+                print()
+                print("========================================")
+                print("      THANK YOU FOR USING RIGHTSNOW")
+                print("========================================")
+
                 break
 
-            # Anything else
+            # Invalid choice
             else:
-                print("Please choose a number from 1 to 5.")
+
+                print()
+                print("Invalid option.")
+                print("Please choose 1, 2, 3, or 4.")
 
 
+# STARTING SCENARIOS
 
+
+# ------------------------------------------------------------
+# 1. TRAFFIC STOP
+# ------------------------------------------------------------
 
 scenario1 = PoliceScenario(
+
     "Traffic Stop",
-    5,
-    "Stay calm and ask questions if you are unsure "
-    "what is happening.",
+
+    "Stay calm and pay attention to what is happening.",
+
+    "Stay calm, keep your hands visible, "
+    "provide required documents, and ask "
+    "questions if you are unsure.",
+
+    "Do not physically resist, threaten the officer, "
+    "or make sudden movements.",
+
+    [
+        "The stop appears to continue longer than "
+        "necessary without additional legal justification.",
+
+        "The officer searches you or your vehicle "
+        "without consent or another lawful basis.",
+
+        "The officer uses excessive force.",
+
+        "The stop or search appears to be based "
+        "on race or ethnicity."
+    ],
+
     "Traffic"
 )
 
+
+# ------------------------------------------------------------
+# 2. QUESTIONED BY POLICE
+# ------------------------------------------------------------
+
 scenario2 = PoliceScenario(
+
     "Questioned by Police",
-    5,
-    "Stay calm and pay attention to what you are "
-    "being asked.",
+
+    "Stay calm and pay attention to what you "
+    "are being asked.",
+
+    "Stay calm, listen carefully, and ask whether "
+    "you are free to leave.",
+
+    "Do not threaten the officer, physically resist, "
+    "or interfere with the investigation.",
+
+    [
+        "You are detained without a clear legal basis.",
+
+        "You are prevented from leaving when you "
+        "are legally free to do so.",
+
+        "Officers use excessive force.",
+
+        "The questioning or detention appears to be "
+        "based on race or ethnicity."
+    ],
+
     "Questioning"
 )
 
+
+# ------------------------------------------------------------
+# 3. STOPPED WHILE WALKING
+# ------------------------------------------------------------
+
 scenario3 = PoliceScenario(
+
     "Stopped While Walking",
-    4,
-    "Stay calm and ask for clarification about "
-    "the situation.",
+
+    "Stay calm and try to understand why "
+    "the interaction is happening.",
+
+    "Stay calm and ask why you are being stopped. "
+    "Ask whether you are free to leave.",
+
+    "Do not run, threaten the officer, "
+    "or physically resist.",
+
+    [
+        "You are detained without a lawful basis.",
+
+        "The officer uses excessive force.",
+
+        "The stop or search appears to be based "
+        "on race or ethnicity.",
+
+        "A search is conducted without consent "
+        "or another lawful basis."
+    ],
+
     "Walking"
 )
 
+
+# ------------------------------------------------------------
+# 4. SCHOOL SEARCH
+# ------------------------------------------------------------
+
 scenario4 = SchoolScenario(
+
     "School Search",
-    4,
-    "Ask why the search is happening and stay calm.",
+
+    "Ask why the search is happening "
+    "and stay calm.",
+
+    "Stay calm and ask what the school is "
+    "looking for and why the search is taking place.",
+
+    "Do not physically resist the search "
+    "or become aggressive.",
+
+    [
+        "School officials conduct a search that "
+        "may not be justified under applicable "
+        "school rules or law.",
+
+        "You are not given an explanation when "
+        "one is appropriate.",
+
+        "The search appears to target you based "
+        "on discrimination."
+    ],
+
     "Search"
 )
 
+
+# ------------------------------------------------------------
+# 5. SCHOOL DISCIPLINE
+# ------------------------------------------------------------
+
 scenario5 = SchoolScenario(
+
     "School Discipline",
-    3,
-    "Ask what rule you are accused of breaking.",
+
+    "Ask what rule or policy you are "
+    "being disciplined for.",
+
+    "Stay calm, ask questions, and ask about "
+    "the school's policy or disciplinary process.",
+
+    "Do not threaten staff, damage property, "
+    "or physically resist.",
+
+    [
+        "You are disciplined in a way that may "
+        "conflict with applicable school policy "
+        "or legal protections.",
+
+        "You are treated differently because "
+        "of a protected characteristic.",
+
+        "You are not given information about "
+        "the disciplinary process when you "
+        "are entitled to it."
+    ],
+
     "Discipline"
 )
 
 
 
-# START THE RIGHTSNOW APP
+# CREATE THE APP
 
 
-# Create the RightsNow boss object
 app = RightsNow()
+
 
 # Add the five starting scenarios
 app.add_scenario(scenario1)
@@ -291,5 +603,8 @@ app.add_scenario(scenario3)
 app.add_scenario(scenario4)
 app.add_scenario(scenario5)
 
-# Start the program
+
+
+# START RIGHTSNOW
+
 app.run()
