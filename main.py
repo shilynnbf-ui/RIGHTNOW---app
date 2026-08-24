@@ -1,8 +1,4 @@
-# RIGHTSNOW
-# An educational app that reminds users about rights-related scenarios.
 
-
-# BLUEPRINT CLASS
 class Scenario:
     def __init__(self, name, importance, reminder):
         self.name = name
@@ -17,19 +13,22 @@ class Scenario:
             print("Importance must be between 1 and 5.")
             self.importance = 1
 
+    # Displays basic scenario information
     def show_info(self):
         print("Scenario:", self.name)
         print("Importance:", self.importance)
         print("Reminder:", self.reminder)
 
 
-# KIND 1
+# KIND 1 - POLICE SCENARIO
+
 class PoliceScenario(Scenario):
+
     def __init__(self, name, importance, reminder, interaction_type):
         super().__init__(name, importance, reminder)
         self.interaction_type = interaction_type
 
-    # Same method name, but works differently
+    # Displays information specifically for police scenarios
     def show_info(self):
         print("\nPOLICE SCENARIO")
         print("Scenario:", self.name)
@@ -38,13 +37,16 @@ class PoliceScenario(Scenario):
         print("Interaction Type:", self.interaction_type)
 
 
-# KIND 2
+# KIND 2 - SCHOOL SCENARIO
+
+
 class SchoolScenario(Scenario):
+
     def __init__(self, name, importance, reminder, school_issue):
         super().__init__(name, importance, reminder)
         self.school_issue = school_issue
 
-    # Same method name, but works differently
+    # Displays information specifically for school scenarios
     def show_info(self):
         print("\nSCHOOL SCENARIO")
         print("Scenario:", self.name)
@@ -53,17 +55,23 @@ class SchoolScenario(Scenario):
         print("School Issue:", self.school_issue)
 
 
+
 # BOSS CLASS
+
+
 class RightsNow:
+
     def __init__(self):
         self.scenarios = []
 
-    # Adds a scenario to the list
+  
     def add_scenario(self, scenario):
         self.scenarios.append(scenario)
 
-    # Shows every scenario with a number
+
+
     def show_scenarios(self):
+
         if len(self.scenarios) == 0:
             print("There are no scenarios.")
             return
@@ -73,8 +81,10 @@ class RightsNow:
         for i in range(len(self.scenarios)):
             print(i + 1, "-", self.scenarios[i].name)
 
-    # Lets the user choose one scenario
+ 
+
     def view_scenario(self):
+
         if len(self.scenarios) == 0:
             print("There are no scenarios.")
             return
@@ -89,13 +99,15 @@ class RightsNow:
                 return
 
             selected = self.scenarios[choice - 1]
+
             selected.show_info()
 
         except ValueError:
             print("Please enter a number.")
 
-    # Lets the user add a new scenario
+
     def create_scenario(self):
+
         print("\nADD A SCENARIO")
         print("1 - Police Scenario")
         print("2 - School Scenario")
@@ -111,9 +123,12 @@ class RightsNow:
             print("Please enter a number.")
             return
 
+        # Get basic information
         name = input("Scenario name: ")
+
         reminder = input("Rights reminder: ")
 
+        # Get importance
         try:
             importance = int(input("Importance from 1 to 5: "))
 
@@ -125,9 +140,12 @@ class RightsNow:
             print("Please enter a number for importance.")
             return
 
+        # Create a Police Scenario
         if scenario_type == 1:
+
             interaction_type = input(
-                "Interaction type (traffic, questioning, walking, etc.): "
+                "Interaction type "
+                "(traffic, questioning, walking, etc.): "
             )
 
             new_scenario = PoliceScenario(
@@ -137,9 +155,12 @@ class RightsNow:
                 interaction_type
             )
 
+        # Create a School Scenario
         else:
+
             school_issue = input(
-                "School issue (search, discipline, speech, etc.): "
+                "School issue "
+                "(search, discipline, speech, etc.): "
             )
 
             new_scenario = SchoolScenario(
@@ -149,11 +170,14 @@ class RightsNow:
                 school_issue
             )
 
+        # Add the new object to the list
         self.add_scenario(new_scenario)
+
         print("Scenario added successfully.")
 
-    # Adds up the importance numbers
+
     def show_total_importance(self):
+
         if len(self.scenarios) == 0:
             print("There are no scenarios to add up.")
             return
@@ -165,12 +189,18 @@ class RightsNow:
 
         print("\nTotal importance points:", total)
 
-    # Runs the whole app
+
+
     def run(self):
+
         print("\nWelcome to RIGHTSNOW")
-        print("Educational use only. Laws and rights can vary by location.")
+        print(
+            "Educational use only. "
+            "Laws and rights can vary by location."
+        )
 
         while True:
+
             print("\nRIGHTSNOW MENU")
             print("1 - Show all scenarios")
             print("2 - View one scenario")
@@ -180,48 +210,55 @@ class RightsNow:
 
             choice = input("Choose an option: ")
 
+            # Option 1
             if choice == "1":
                 self.show_scenarios()
 
+            # Option 2
             elif choice == "2":
                 self.view_scenario()
 
+            # Option 3
             elif choice == "3":
                 self.create_scenario()
 
+            # Option 4
             elif choice == "4":
                 self.show_total_importance()
 
+            # Option 5
             elif choice == "5":
                 print("Thanks for using RIGHTSNOW.")
                 break
 
+            # Anything else
             else:
                 print("Please choose a number from 1 to 5.")
 
 
-# --------------------------------------------------
-# FIVE STARTING OBJECTS
-# --------------------------------------------------
+
 
 scenario1 = PoliceScenario(
     "Traffic Stop",
     5,
-    "Stay calm and ask questions if you are unsure what is happening.",
+    "Stay calm and ask questions if you are unsure "
+    "what is happening.",
     "Traffic"
 )
 
 scenario2 = PoliceScenario(
     "Questioned by Police",
     5,
-    "Stay calm and pay attention to what you are being asked.",
+    "Stay calm and pay attention to what you are "
+    "being asked.",
     "Questioning"
 )
 
 scenario3 = PoliceScenario(
     "Stopped While Walking",
     4,
-    "Stay calm and ask for clarification about the situation.",
+    "Stay calm and ask for clarification about "
+    "the situation.",
     "Walking"
 )
 
@@ -240,16 +277,19 @@ scenario5 = SchoolScenario(
 )
 
 
-# --------------------------------------------------
-# START THE APP
-# --------------------------------------------------
 
+# START THE RIGHTSNOW APP
+
+
+# Create the RightsNow boss object
 app = RightsNow()
 
+# Add the five starting scenarios
 app.add_scenario(scenario1)
 app.add_scenario(scenario2)
 app.add_scenario(scenario3)
 app.add_scenario(scenario4)
 app.add_scenario(scenario5)
 
+# Start the program
 app.run()
